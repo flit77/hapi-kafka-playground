@@ -13,13 +13,6 @@ server.connection({
 
 // Add the route
 server.route({
-  method: 'GET',
-  path: '/hello',
-  handler: (request, reply) => reply('hello world')
-});
-
-// Add the route
-server.route({
   method: ['PUT', 'POST'],
   path: '/tweet/add',
   handler: (request, reply) => {
