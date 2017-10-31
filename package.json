@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "server": "DEBUG=error node server.js",
-    "server:dev": "DEBUG=log,error node server.js"
+    "server:dev": "DEBUG=log,error node server.js",
+    "kafka:tweet24:producer": "DEBUG=log,error node kafka/producer.js",
+    "kafka:tweet24:consumer": "DEBUG=log,error node kafka/consumer.js"
   },
   "keywords": [],
   "author": "",
@@ -39,6 +41,7 @@
     "debug": "^3.1.0",
     "hapi": "^16.6.2",
     "kafka-node": "^2.2.3",
+    "uuid": "^3.1.0",
     "ws": "^3.2.0"
   }
 }
