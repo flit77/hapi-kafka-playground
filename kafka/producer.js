@@ -4,6 +4,7 @@ const tweetSchema = require('./tweet.schema');
 
 const dLog = debug('log');
 const dError = debug('error');
+const TOPIC_NAME = 'tweet24_1';
 
 const client = new Client('localhost:2181', 'tweet24app', {
   sessionTimeout: 300,
@@ -28,7 +29,7 @@ producer.on('ready', () => {
 
   const payload = [
     {
-      topic: 'tweet24',
+      topic: TOPIC_NAME,
       messages: messageBuffer,
       attributes: 1
     }

@@ -2,10 +2,10 @@ const Hapi = require('hapi');
 const debug = require('debug');
 const { HighLevelProducer, Client } = require('kafka-node');
 const uuidv4 = require('uuid/v4');
-const tweetSchema = require('./kafka/tweet.schema');
 
 const dLog = debug('log');
 const dError = debug('error');
+const TOPIC_NAME = 'tweet24_2';
 
 const server = new Hapi.Server();
 server.connection({
@@ -51,7 +51,7 @@ server.route({
       try {
         dLog('in producer');
 
-        const messageBuffer = tweetSchema.toBuffer({
+        const messageBuffer = JSON.stringify({
           id: uuidv4(),
           body: tweet,
           latitude,
@@ -61,7 +61,7 @@ server.route({
 
         const payload = [
           {
-            topic: 'tweet24',
+            topic: TOPIC_NAME,
             messages: messageBuffer,
             attributes: 1
           }
