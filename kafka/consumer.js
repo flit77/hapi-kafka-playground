@@ -2,17 +2,23 @@ const debug = require('debug');
 const { Client, Consumer } = require('kafka-node');
 const WebSocketServer = require('ws').Server;
 
+require('dotenv').config();
+
 const dLog = debug('log');
 const dError = debug('error');
-const TOPIC_NAME = 'tweet24_2';
-const POST_DELAY_MS = 1000 * 60 * 60 * 24; // 24 hours post delay
 
-const wss = new WebSocketServer({ port: 8081 });
+const TOPIC_NAME = process.env.TOPIC_NAME || 'tweet24';
+const KAFKA_CLIENT_URI = process.env.KAFKA_CLIENT_URI || 'localhost:2181';
+const POST_DELAY_MS = 1000 * 60 * 60 * 24;
+
+const wss = new WebSocketServer({
+  port: process.env.WEB_SOCKET_SERVER_PORT || 8081
+});
 
 wss.on('connection', ws => {
   dLog('ws connection opened');
 
-  const client = new Client('localhost:2181');
+  const client = new Client(KAFKA_CLIENT_URI);
   const kafkaConsumer = new Consumer(
     client,
     [{ topic: TOPIC_NAME, offset: 0 }],

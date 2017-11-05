@@ -3,14 +3,19 @@ const debug = require('debug');
 const { HighLevelProducer, Client } = require('kafka-node');
 const uuidv4 = require('uuid/v4');
 
+require('dotenv').config();
+
 const dLog = debug('log');
 const dError = debug('error');
-const TOPIC_NAME = 'tweet24_2';
+
+const TOPIC_NAME = process.env.TOPIC_NAME || 'tweet24';
+const HAPI_SERVER_HOST = process.env.HAPI_SERVER_HOST || 'localhost';
+const HAPI_SERVER_PORT = process.env.HAPI_SERVER_PORT || 8000;
 
 const server = new Hapi.Server();
 server.connection({
-  host: 'localhost',
-  port: 8000
+  host: HAPI_SERVER_HOST,
+  port: HAPI_SERVER_PORT
 });
 
 const client = new Client('localhost:2181', 'tweet24app', {
