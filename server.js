@@ -8,17 +8,13 @@ require('dotenv').config();
 const dLog = debug('log');
 const dError = debug('error');
 
-const TOPIC_NAME = process.env.TOPIC_NAME || 'tweet24';
-const HAPI_SERVER_HOST = process.env.HAPI_SERVER_HOST || 'localhost';
-const HAPI_SERVER_PORT = process.env.HAPI_SERVER_PORT || 8000;
-
 const server = new Hapi.Server();
 server.connection({
-  host: HAPI_SERVER_HOST,
-  port: HAPI_SERVER_PORT
+  host: process.env.HAPI_SERVER_HOST,
+  port: process.env.HAPI_SERVER_PORT
 });
 
-const client = new Client('localhost:2181', 'tweet24app', {
+const client = new Client(process.env.KAFKA_CLIENT_URI, 'tweet24app', {
   sessionTimeout: 300,
   spinDelay: 100,
   retries: 2
@@ -66,7 +62,7 @@ server.route({
 
         const payload = [
           {
-            topic: TOPIC_NAME,
+            topic: process.env.TOPIC_NAME,
             messages: messageBuffer,
             attributes: 1
           }
