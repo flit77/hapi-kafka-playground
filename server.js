@@ -72,7 +72,7 @@ server.route({
           }
         ];
 
-        producer.send(payload, (error, result) => {
+        return producer.send(payload, (error, result) => {
           dLog('Sent payload to Kafka: ', payload);
           if (error) {
             dError(error);
@@ -97,10 +97,6 @@ server.route({
           error
         }).code(400)
       );
-
-    // return reply(
-    //   `tweet add action: post action. tweet: ${tweet}, latitude: ${latitude}, longitude: ${longitude}`
-    // );
   }
 });
 
