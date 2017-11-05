@@ -44,8 +44,10 @@ wss.on('connection', ws => {
     }, messageDelay);
   });
 
-  kafkaConsumer.on('error', consumerErr => dError(consumerErr));
-  kafkaConsumer.on('offsetOutOfRange', consumerErr => dError(consumerErr));
+  kafkaConsumer.on('error', consumerErr => dError('consumerErr', consumerErr));
+  kafkaConsumer.on('offsetOutOfRange', consumerErr =>
+    dError('offsetOutOfRange', consumerErr)
+  );
 });
 
 process.on('SIGINT', () => {

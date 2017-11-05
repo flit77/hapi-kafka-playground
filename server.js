@@ -27,7 +27,7 @@ client.on('error', error => {
 const producer = new HighLevelProducer(client);
 
 producer.on('error', error => {
-  dError(error);
+  dError('Kafka producer error: ', error);
 });
 
 server.route({
@@ -90,7 +90,7 @@ server.route({
       )
       .catch(error =>
         reply({
-          error
+          error: error.toString()
         }).code(400)
       );
   }
