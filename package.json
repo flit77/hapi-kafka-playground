@@ -6,8 +6,8 @@
   "scripts": {
     "server": "DEBUG=error node server.js",
     "server:dev": "DEBUG=log,error node server.js",
-    "kafka:tweet24:producer": "DEBUG=log,error node kafka/producer.js",
-    "kafka:tweet24:consumer": "DEBUG=log,error node kafka/consumer.js"
+    "kafka:tweet24:producer": "DEBUG=log,error node producer.js",
+    "kafka:tweet24:consumer": "DEBUG=log,error node consumer.js"
   },
   "keywords": [],
   "author": "",
