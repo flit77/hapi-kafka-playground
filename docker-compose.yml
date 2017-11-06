@@ -1,0 +1,10 @@
+tweet24:
+  build: .
+  ports:
+    - "127.0.0.1:7878:7878"
+  environment:
+   - GRUNT_ENVIRONMENT=production
+  volumes:
+    - ./src/:/application/src
+    - ./views/:/application/views
+    - ./public/:/application/public
