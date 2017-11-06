@@ -10,7 +10,7 @@ tweet24_server:
     - HAPI_SERVER_HOST=localhost
 
 tweet24_consumer:
-  build: ./server/
+  build: ./consumer/
   restart: always
   ports:
     - "127.0.0.1:15002:15002"
