@@ -8,4 +8,4 @@ RUN npm install --production
 
 CMD ["npm", "run", "start"]
 
-EXPOSE 15001
+EXPOSE 15002

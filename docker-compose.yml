@@ -1,10 +1,21 @@
-tweet24:
-  build: .
+tweet24_server:
+  build: ./server/
+  restart: always
   ports:
-    - "127.0.0.1:7878:7878"
+    - "127.0.0.1:15001:15001"
   environment:
-   - GRUNT_ENVIRONMENT=production
-  volumes:
-    - ./src/:/application/src
-    - ./views/:/application/views
-    - ./public/:/application/public
+    - TOPIC_NAME=tweet24
+    - KAFKA_CLIENT_URI=192.168.31.242:2181
+    - HAPI_SERVER_PORT=15001
+    - HAPI_SERVER_HOST=localhost
+
+tweet24_consumer:
+  build: ./server/
+  restart: always
+  ports:
+    - "127.0.0.1:15002:15002"
+  environment:
+    - TOPIC_NAME=tweet24
+    - WEB_SOCKET_SERVER_PORT=15002
+    - KAFKA_CLIENT_URI=192.168.31.242:2181
+
