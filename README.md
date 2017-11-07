@@ -19,3 +19,9 @@ Config options that essential to run project:
 
 To run project in microservices:
 > docker-compose up
+
+> To add tweet send POST request to following url:
+> http://HAPI_SERVER_HOST:HAPI_SERVER_PORT/tweet/add
+> with following params: tweet, latitude, longitude
+
+> To get response by web sockets it's needed to open ws connection on ws://WEB_SOCKET_SERVER_URL:WEB_SOCKET_SERVER_PORT
