@@ -6,7 +6,7 @@
 A project implemented on node.js using Apache Kafka and configurable to be deployed in the docker containers.
 
 There project splitted into 2 microservies:
-* server - web server build with hapy to receive and handle post requests
+* server - web server build with hapi.js to receive and handle post requests
 * consumer - kafka consumer to handle tweets, added with post requests
 
 Please make sure that configuration options are presetted in environment variables or fulfilled in following config files:
