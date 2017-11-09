@@ -31,6 +31,16 @@ producer.on('error', error => {
 });
 
 server.route({
+  method: ['GET'],
+  path: '/',
+  handler: (request, reply) => {
+    reply(
+      'This is basic demo of tweet24 app. To post a tweet please send POST reqeust to /tweet/add endpoint.'
+    );
+  }
+});
+
+server.route({
   method: ['PUT', 'POST'],
   path: '/tweet/add',
   handler: (request, reply) => {
