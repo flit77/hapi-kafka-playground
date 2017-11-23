@@ -46,7 +46,7 @@ server.route({
   handler: (request, reply) => {
     const { tweet, latitude, longitude } = request.payload;
 
-    if (!tweet) {
+    if (!tweet || !tweet.length) {
       const errorMessage = 'tweet param missed';
       dError(errorMessage);
       return reply({
@@ -56,60 +56,47 @@ server.route({
 
     dLog('request.params: ', request.payload);
 
-    return new Promise((resolve, reject) => {
-      dLog('in promise');
+    const messageBuffer = JSON.stringify({
+      id: uuidv4(),
+      body: tweet,
+      latitude,
+      longitude,
+      timestamp: Date.now()
+    });
 
-      try {
-        dLog('in producer');
-
-        const messageBuffer = JSON.stringify({
-          id: uuidv4(),
-          body: tweet,
-          latitude,
-          longitude,
-          timestamp: Date.now()
-        });
-
-        const payload = [
-          {
-            topic: process.env.TOPIC_NAME,
-            messages: messageBuffer,
-            attributes: 1
-          }
-        ];
-
-        return producer.send(payload, (error, result) => {
-          dLog('Sent payload to Kafka: ', payload);
-          if (error) {
-            dError(error);
-            return reject(
-              new Error('Server Error, please contact administrator')
-            );
-          }
-          dLog('result: ', result);
-          return resolve('Tweet added');
-        });
-      } catch (error) {
-        return reject(new Error('Server Error, producer is not ready'));
+    const payload = [
+      {
+        topic: process.env.TOPIC_NAME,
+        messages: messageBuffer,
+        attributes: 1
       }
-    })
-      .then(success =>
-        reply({
-          success
-        })
-      )
-      .catch(error =>
-        reply({
-          error: error.toString()
-        }).code(400)
-      );
+    ];
+
+    return producer.send(payload, (error, result) => {
+      dLog('Sent payload to Kafka: ', payload);
+      if (error) {
+        dError(error);
+
+        return reply({
+          error: 'Server Error, please contact administrator'
+        }).code(400);
+      }
+      dLog('result: ', result);
+      return reply({
+        success: 'Tweet added'
+      });
+    });
   }
 });
 
 // Start the server
-server.start(err => {
-  if (err) {
-    throw err;
-  }
-  dLog('Server running at:', server.info.uri);
-});
+if (!module.parent) {
+  server.start(err => {
+    if (err) {
+      throw err;
+    }
+    dLog('Server running at:', server.info.uri);
+  });
+}
+
+module.exports = server;

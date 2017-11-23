@@ -7,7 +7,8 @@ require('dotenv').config();
 const dLog = debug('log');
 const dError = debug('error');
 
-const POST_DELAY_MS = 1000 * 60 * 60 * 24;
+// const POST_DELAY_MS = 1000 * 60 * 60 * 24;
+const POST_DELAY_MS = 1000 * 10;
 
 const wss = new WebSocketServer({
   port: process.env.WEB_SOCKET_SERVER_PORT
